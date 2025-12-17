@@ -222,41 +222,70 @@ export function PipelineVisualization({ isRunning }: PipelineVisualizationProps)
                 disabled={!isComplete && !isCurrent}
                 className="w-full p-4 flex items-center gap-3 text-left hover:bg-gray-50/50 transition-colors disabled:cursor-not-allowed"
               >
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    isComplete ? "bg-green-500" : isCurrent ? "bg-blue-500 animate-pulse" : "bg-gray-300"
-                  }`}
-                >
-                  {isComplete ? (
-                    <CheckCircle className="w-5 h-5 text-white" />
-                  ) : (
-                    <Icon className="w-5 h-5 text-white" />
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-sm text-gray-900">{stage.name}</h3>
-                  <p className="text-xs text-gray-600">{stage.desc}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  {isCurrent && (
-                    <span className="text-xs font-medium text-blue-600 px-2 py-1 bg-blue-100 rounded">
-                      Processing...
-                    </span>
-                  )}
-                  {isComplete && (
-                    <span className="text-xs font-medium text-green-600 px-2 py-1 bg-green-100 rounded">
-                      ✓ Complete
-                    </span>
-                  )}
-                  {(isComplete || isCurrent) && (
-                    <div className="ml-1">
-                      {isExpanded ? (
-                        <ChevronUp className="w-4 h-4 text-gray-400" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4 text-gray-400" />
-                      )}
+                <div className="flex items-start gap-3">
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      isComplete ? "bg-green-500" : isCurrent ? "bg-blue-500 animate-pulse" : "bg-gray-300"
+                    }`}
+                  >
+                    {isComplete ? (
+                      <CheckCircle className="w-5 h-5 text-white" />
+                    ) : (
+                      <Icon className="w-5 h-5 text-white" />
+                    )}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-2">
+                      <div>
+                        <h3 className="font-semibold text-sm text-gray-900">{stage.name}</h3>
+                        <p className="text-xs text-gray-600">{stage.desc}</p>
+                      </div>
+                      <div className="flex items-center gap-2 ml-4">
+                        {isCurrent && (
+                          <span className="text-xs font-medium text-blue-600 px-2 py-1 bg-blue-100 rounded whitespace-nowrap">
+                            Processing...
+                          </span>
+                        )}
+                        {isComplete && (
+                          <span className="text-xs font-medium text-green-600 px-2 py-1 bg-green-100 rounded whitespace-nowrap">
+                            ✓ Complete
+                          </span>
+                        )}
+                        {(isComplete || isCurrent) && (
+                          <div className="ml-1">
+                            {isExpanded ? (
+                              <ChevronUp className="w-4 h-4 text-gray-400" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-gray-400" />
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  )}
+
+                    {/* Summary info in collapsed view */}
+                    {!isExpanded && (isComplete || isCurrent) && (
+                      <div className="mt-3 space-y-1 text-xs">
+                        <div className="flex items-start gap-2">
+                          <span className="font-medium text-gray-700 w-16 flex-shrink-0">Input:</span>
+                          <span className="text-gray-600 flex-1 line-clamp-1">{stage.details.input}</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="font-medium text-gray-700 w-16 flex-shrink-0">Output:</span>
+                          <span className="text-gray-600 flex-1 line-clamp-1">{stage.details.output}</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="font-medium text-gray-700 w-16 flex-shrink-0">Metrics:</span>
+                          <span className="text-gray-600 flex-1 line-clamp-1">{stage.details.metrics}</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="font-medium text-gray-700 w-16 flex-shrink-0">Duration:</span>
+                          <span className="text-gray-600">{stage.duration}ms</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </button>
 
