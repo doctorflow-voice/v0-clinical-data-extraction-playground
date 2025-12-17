@@ -23,10 +23,10 @@ export default function PromptPlayground() {
     setRightPanelCollapsed(false)
     setIsRunning(true)
 
-    // Simulate pipeline execution
+    // Pipeline runs for total duration of all stages (~3.4 seconds)
     setTimeout(() => {
       setIsRunning(false)
-    }, 10000)
+    }, 3500)
   }
 
   const handleReset = () => {
@@ -83,12 +83,12 @@ export default function PromptPlayground() {
         </div>
       </header>
 
-      {/* Main Content - 3 Panel Layout */}
+      {/* Main Content - 3 Panel Layout with flex-grow for Panel 3 */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Left Panel - Strategies & Settings */}
+        {/* Panel 1 - Left Panel - Strategies & Settings */}
         <div
-          className={`bg-white border-r border-gray-200 transition-all duration-300 relative ${
-            leftPanelCollapsed ? "w-12" : "w-[25%] min-w-[320px]"
+          className={`bg-white border-r border-gray-200 transition-all duration-300 relative flex-shrink-0 ${
+            leftPanelCollapsed ? "w-[60px]" : "w-[25%] min-w-[320px]"
           }`}
         >
           {/* Toggle Button */}
@@ -144,8 +144,12 @@ export default function PromptPlayground() {
           )}
         </div>
 
-        {/* Center Panel - Clinical Note & Results */}
-        <div className="flex-1 bg-white overflow-y-auto">
+        {/* Panel 2 - Center Panel - Clinical Note & Results */}
+        <div
+          className={`bg-white overflow-y-auto transition-all duration-300 flex-shrink-0 ${
+            rightPanelCollapsed ? "w-[50%]" : "w-[100px]"
+          }`}
+        >
           <ClinicalNoteInput
             value={clinicalNote}
             onChange={setClinicalNote}
@@ -155,10 +159,10 @@ export default function PromptPlayground() {
           />
         </div>
 
-        {/* Right Panel - Pipeline Visualization */}
+        {/* Panel 3 - Right Panel - Pipeline Visualization (uses flex-grow) */}
         <div
           className={`bg-white border-l border-gray-200 transition-all duration-300 relative ${
-            rightPanelCollapsed ? "w-12" : "w-[25%] min-w-[320px]"
+            rightPanelCollapsed ? "w-[60px] flex-shrink-0" : "flex-1 min-w-[25%]"
           }`}
         >
           {/* Toggle Button */}

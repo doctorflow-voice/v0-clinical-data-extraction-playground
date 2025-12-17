@@ -66,7 +66,11 @@ export function StrategySelector({ selectedStrategies, onStrategyChange }: Strat
       </div>
 
       {/* Selected Strategies Queue */}
-      {selectedStrategies.length > 0 && (
+      {selectedStrategies.length === 0 ? (
+        <div className="text-center py-6 text-sm text-gray-500">
+          No strategies selected. Click checkboxes below to add.
+        </div>
+      ) : (
         <div className="mb-4 space-y-2">
           {selectedStrategies.map((strategyId, index) => {
             const strategy = strategies.find((s) => s.id === strategyId)
